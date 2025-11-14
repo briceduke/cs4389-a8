@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bookstore</title>
+</head>
+
+<body>
+    <div>
+        <div>
+            <h2>Customer Information Received:</h2>
+            <strong>Customer Name:</strong> <span id="customerName"></span><br>
+            <strong>Password:</strong> <span id="customerPassword"></span><br>
+            <strong>Customer Address (Hidden Field):</strong> <span id="customerAddress"></span>
+        </div>
+
+        <div>
+            <h2>Shipping Cost Calculation:</h2>
+            <strong>Calculated Shipping Cost:</strong> $<span id="shippingCost"></span>
+        </div>
+
+        <div>
+            <strong>Address Bar Query String:</strong><br>
+            <span id="queryString"></span>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const customerName = urlParams.get('customerName') || 'Not provided';
+        const customerPassword = urlParams.get('customerPassword') || 'Not provided';
+        const customerAddress = urlParams.get('customerAddress') || 'Not provided';
+
+        let shippingCost = 0;
+        const addressLower = customerAddress.toLowerCase();
+        if (addressLower.includes('texas')) {
+            shippingCost = 5.00;
+        } else if (addressLower.includes('new york')) {
+            shippingCost = 7.50;
+        } else {
+            shippingCost = 15.00;
+        }
+
+        document.getElementById('customerName').textContent = customerName;
+        document.getElementById('customerPassword').textContent = customerPassword;
+        document.getElementById('customerAddress').textContent = customerAddress;
+        document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
+        document.getElementById('queryString').textContent = window.location.search.substring(1);
+    </script>
+</body>
+
+</html>
