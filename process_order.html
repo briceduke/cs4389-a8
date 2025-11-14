@@ -27,28 +27,48 @@
         </div>
     </div>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
+    <script type="text/javascript">
+        function getQueryParam(name) {
+            var queryString = window.location.search.substring(1);
+            var params = queryString.split('&');
+            for (var i = 0; i < params.length; i++) {
+                var pair = params[i].split('=');
+                if (pair[0] == name) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return null;
+        }
 
-        const customerName = urlParams.get('customerName') || 'Not provided';
-        const customerPassword = urlParams.get('customerPassword') || 'Not provided';
-        const customerAddress = urlParams.get('customerAddress') || 'Not provided';
+        var customerName = getQueryParam('customerName') || 'Not provided';
+        var customerPassword = getQueryParam('customerPassword') || 'Not provided';
+        var customerAddress = getQueryParam('customerAddress') || 'Not provided';
 
-        let shippingCost = 0;
-        const addressLower = customerAddress.toLowerCase();
-        if (addressLower.includes('texas')) {
+        var shippingCost = 0;
+        var addressLower = customerAddress.toLowerCase();
+        if (addressLower.indexOf('texas') !== -1) {
             shippingCost = 5.00;
-        } else if (addressLower.includes('new york')) {
+        } else if (addressLower.indexOf('new york') !== -1) {
             shippingCost = 7.50;
         } else {
             shippingCost = 15.00;
         }
 
-        document.getElementById('customerName').textContent = customerName;
-        document.getElementById('customerPassword').textContent = customerPassword;
-        document.getElementById('customerAddress').textContent = customerAddress;
-        document.getElementById('shippingCost').textContent = shippingCost.toFixed(2);
-        document.getElementById('queryString').textContent = window.location.search.substring(1);
+        if (document.getElementById('customerName')) {
+            document.getElementById('customerName').innerText = customerName;
+        }
+        if (document.getElementById('customerPassword')) {
+            document.getElementById('customerPassword').innerText = customerPassword;
+        }
+        if (document.getElementById('customerAddress')) {
+            document.getElementById('customerAddress').innerText = customerAddress;
+        }
+        if (document.getElementById('shippingCost')) {
+            document.getElementById('shippingCost').innerText = shippingCost.toFixed(2);
+        }
+        if (document.getElementById('queryString')) {
+            document.getElementById('queryString').innerText = window.location.search.substring(1);
+        }
     </script>
 </body>
 
